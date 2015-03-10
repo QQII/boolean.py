@@ -502,7 +502,7 @@ class Function(Expression):
             else:
                 return "%s(%s)" % (self.operator, str(args[0]))
         else:
-            args = (str(arg) if arg.isliteral else "(%s)" % arg for arg in args)
+            args = (str(arg) if arg.isliteral or arg.order == (1, 1) else "(%s)" % arg for arg in args)
             return self.operator.join(args)
 
     def __repr__(self):
