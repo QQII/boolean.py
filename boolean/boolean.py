@@ -537,6 +537,8 @@ class NOT(Function):
         """
         Return an expression where NOTs are only occuring as literals.
         """
+        if self.isliteral:
+            return self
         expr = self.demorgan()
         if isinstance(expr, self.__class__):
             return expr
@@ -551,7 +553,7 @@ class NOT(Function):
         """
         if self.iscanonical:
             return self
-        term = self.cancel()
+        term = self.literalize()
         if not isinstance(term, self.__class__):
             return term.eval()
         elif term.args[0] in self.algebra.domain:
@@ -690,8 +692,6 @@ class DualBase(Function):
         # be set False - otherwise infinite recursion!
         # TODO: Only create new class if some args changed.
         term = self.__class__(*args, eval=False)
-        #Literalize before doing anything, this also applies De Mogan's Law
-        term  = term.literalize()
         # Associativity:
         #     (A * B) * C = A * (B * C) = A * B * C
         #     (A + B) + C = A + (B + C) = A + B + C
