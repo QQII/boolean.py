@@ -1078,7 +1078,7 @@ class BooleanAlgebra:
 
     def __init__(self, *, bool_expr=None, bool_base=None):
         self.bool_expr = Symbol(obj=self) if bool_expr is None else bool_expr
-        self.bool_base = BooleanBase if bool_base is None else bool_base
+        self.bool_base = BooleanAlgebra if bool_base is None else bool_base
 
     def __hash__(self):
         if isinstance(self.bool_expr, self.bool_expr.algebra.symbol):
